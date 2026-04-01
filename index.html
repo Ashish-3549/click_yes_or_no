@@ -21,6 +21,7 @@
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       animation: fadeIn 1s ease-in-out;
+      width: 320px;
     }
     img {
       width: 120px;
@@ -29,6 +30,14 @@
       object-fit: cover;
       margin-bottom: 15px;
       border: 3px solid #ff4d6d;
+    }
+    input {
+      padding: 10px;
+      width: 80%;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      text-align: center;
     }
     button {
       padding: 10px 20px;
@@ -74,14 +83,26 @@
   <div class="container">
     <img src="myphoto.jpg" alt="My Photo">
 
-    <h2 id="question">Do you believe in love at first sight… or should I walk by again? 😏</h2>
-    <button class="yes" onclick="startMusic(); nextQuestion(true)">Yes</button>
-    <button class="no" onmouseover="moveButton()" onclick="startMusic(); nextQuestion(false)">No</button>
+    <!-- Name Input -->
+    <div id="nameBox">
+      <h3>Enter your name 💖</h3>
+      <input type="text" id="herName" placeholder="Type your name here">
+      <br>
+      <button class="yes" onclick="startProposal()">Start</button>
+    </div>
+
+    <!-- Questions -->
+    <div id="quiz" style="display:none;">
+      <h2 id="question"></h2>
+      <button class="yes" onclick="startMusic(); nextQuestion(true)">Yes</button>
+      <button class="no" onmouseover="moveButton()" onclick="startMusic(); nextQuestion(false)">No</button>
+    </div>
   </div>
 
   <script>
     let step = 0;
     let musicStarted = false;
+    let name = "";
 
     const questions = [
       "Do you believe in love at first sight… or should I walk by again? 😏",
@@ -92,6 +113,13 @@
       "Okay serious question now… don’t panic 😅",
       "Will you be my girlfriend? ❤️"
     ];
+
+    function startProposal() {
+      name = document.getElementById("herName").value || "";
+      document.getElementById("nameBox").style.display = "none";
+      document.getElementById("quiz").style.display = "block";
+      document.getElementById("question").innerText = `Hey ${name} 😍\n${questions[0]}`;
+    }
 
     function startMusic() {
       if (!musicStarted) {
@@ -108,7 +136,7 @@
         if (answer) {
           document.getElementById("bgMusic").pause();
           document.getElementById("yesMusic").play();
-          document.getElementById("question").innerText = "Ashish ❤️ \nYou just made me the happiest person 😍";
+          document.getElementById("question").innerText = `Ashish ❤️ ${name}\nYou just made me the happiest person 😍`;
           launchHearts();
         } else {
           document.getElementById("question").innerText = "No option is not allowed 😜 Try again!";
