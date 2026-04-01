@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Important Question 💖</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(to right, #ff758c, #ff7eb3);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      overflow: hidden;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: fadeIn 1s ease-in-out;
+    }
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid #ff4d6d;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .yes { background: #4CAF50; color: white; }
+    .no { background: #f44336; color: white; position: relative; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .heart {
+      position: absolute;
+      color: red;
+      font-size: 20px;
+      animation: floatUp 3s linear infinite;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-200px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Music -->
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/royalty-free-music/track/romantic" type="audio/mpeg">
+  </audio>
+
+  <div class="container">
+    <!-- Add your photo here -->
+    <img src="https://via.placeholder.com/120" alt="Your Photo">
+
+    <h2 id="question">Do you believe in love at first sight… or should I walk by again? 😏</h2>
+    <button class="yes" onclick="nextQuestion(true)">Yes</button>
+    <button class="no" onmouseover="moveButton()" onclick="nextQuestion(false)">No</button>
+  </div>
+
+  <script>
+    let step = 0;
+    const questions = [
+      "Do you believe in love at first sight… or should I walk by again? 😏",
+      "Are you always this cute, or is it just when I’m around? 😄",
+      "If I bring food, will you bring love? 🍕❤️",
+      "On a scale of 1 to 10… how lucky would you be to date me? 😜",
+      "Be honest… you smiled because of me, right? 😊",
+      "Okay serious question now… don’t panic 😅",
+      "Will you be my girlfriend? ❤️"
+    ];
+
+    function nextQuestion(answer) {
+      step++;
+      if (step < questions.length) {
+        document.getElementById("question").innerText = questions[step];
+      } else {
+        if (answer) {
+          document.getElementById("question").innerText = "Yayyy! 💖 I knew it!";
+          launchHearts();
+        } else {
+          document.getElementById("question").innerText = "No option is not allowed 😜 Try again!";
+          step = questions.length - 2;
+        }
+      }
+    }
+
+    function moveButton() {
+      const btn = document.querySelector('.no');
+      const x = Math.random() * 300 - 150;
+      const y = Math.random() * 300 - 150;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function launchHearts() {
+      for (let i = 0; i < 20; i++) {
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "❤️";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = "100%";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 3000);
+      }
+    }
+  </script>
+
+</body>
+</html>
+
