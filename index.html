@@ -85,8 +85,8 @@
 
     <!-- Name Input -->
     <div id="nameBox">
-      <h3>Enter your name 💖</h3>
-      <input type="text" id="herName" placeholder="Type your name here">
+      <h3>Hey ❤️ write your name to continue</h3>
+      <input type="text" id="herName" placeholder="Your name here 😍">
       <br>
       <button class="yes" onclick="startProposal()">Start</button>
     </div>
@@ -115,10 +115,15 @@
     ];
 
     function startProposal() {
-      name = document.getElementById("herName").value || "";
+      name = document.getElementById("herName").value.trim();
+      if (name === "") {
+        alert("Please enter your name first 😄");
+        return;
+      }
       document.getElementById("nameBox").style.display = "none";
       document.getElementById("quiz").style.display = "block";
       document.getElementById("question").innerText = `Hey ${name} 😍\n${questions[0]}`;
+    } 😍\n${questions[0]}`;
     }
 
     function startMusic() {
