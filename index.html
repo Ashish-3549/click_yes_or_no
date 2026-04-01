@@ -115,16 +115,19 @@
     ];
 
     function startProposal() {
-      name = document.getElementById("herName").value.trim();
-      if (name === "") {
-        alert("Please enter your name first 😄");
-        return;
-      }
-      document.getElementById("nameBox").style.display = "none";
-      document.getElementById("quiz").style.display = "block";
-      document.getElementById("question").innerText = `Hey ${name} 😍\n${questions[0]}`;
-    } 😍\n${questions[0]}`;
-    }
+  name = document.getElementById("herName").value.trim();
+
+  if (name === "") {
+    alert("Please enter your name first 😄");
+    return;
+  }
+
+  document.getElementById("nameBox").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+
+  document.getElementById("question").innerText =
+    "Hey " + name + " 😍\n" + questions[0];
+}
 
     function startMusic() {
       if (!musicStarted) {
