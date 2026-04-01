@@ -39,7 +39,7 @@
       cursor: pointer;
     }
     .yes { background: #4CAF50; color: white; }
-    .no { background: #f44336; color: white; position: absolute; }
+    .no { background: #f44336; color: white; position: relative; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.8); }
@@ -63,26 +63,20 @@
 
   <!-- Background Music -->
   <audio id="bgMusic" loop>
-    <source src="romantic.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- YES Special Music -->
-  <audio id="yesMusic">
-    <source src="yes.mp3" type="audio/mpeg">
+  <source src="bensound-romantic.mp3 type="audio/mpeg">
   </audio>
 
   <div class="container">
-    <img src="myphoto.jpg" alt="My Photo">
+    <!-- Add your photo here -->
+    <img src="myphoto.jpg" alt="Your Photo">
 
     <h2 id="question">Do you believe in love at first sight… or should I walk by again? 😏</h2>
-    <button class="yes" onclick="startMusic(); nextQuestion(true)">Yes</button>
-    <button class="no" onmouseover="moveButton()" onclick="startMusic(); nextQuestion(false)">No</button>
+    <button class="yes" onclick="nextQuestion(true)">Yes</button>
+    <button class="no" onmouseover="moveButton()" onclick="nextQuestion(false)">No</button>
   </div>
 
   <script>
     let step = 0;
-    let musicStarted = false;
-
     const questions = [
       "Do you believe in love at first sight… or should I walk by again? 😏",
       "Are you always this cute, or is it just when I’m around? 😄",
@@ -93,22 +87,13 @@
       "Will you be my girlfriend? ❤️"
     ];
 
-    function startMusic() {
-      if (!musicStarted) {
-        document.getElementById("bgMusic").play();
-        musicStarted = true;
-      }
-    }
-
     function nextQuestion(answer) {
       step++;
       if (step < questions.length) {
         document.getElementById("question").innerText = questions[step];
       } else {
         if (answer) {
-          document.getElementById("bgMusic").pause();
-          document.getElementById("yesMusic").play();
-          document.getElementById("question").innerText = "Ashish ❤️ [Her Name]\nYou just made me the happiest person 😍";
+          document.getElementById("question").innerText = "Yayyy! 💖 I knew it!";
           launchHearts();
         } else {
           document.getElementById("question").innerText = "No option is not allowed 😜 Try again!";
@@ -119,8 +104,9 @@
 
     function moveButton() {
       const btn = document.querySelector('.no');
-      btn.style.left = Math.random() * window.innerWidth + "px";
-      btn.style.top = Math.random() * window.innerHeight + "px";
+      const x = Math.random() * 300 - 150;
+      const y = Math.random() * 300 - 150;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
     }
 
     function launchHearts() {
@@ -141,3 +127,4 @@
 
 </body>
 </html>
+
