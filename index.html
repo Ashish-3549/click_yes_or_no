@@ -15,6 +15,7 @@
       margin: 0;
       overflow: hidden;
     }
+
     .container {
       background: white;
       padding: 30px;
@@ -23,6 +24,7 @@
       animation: fadeIn 1s ease-in-out;
       width: 320px;
     }
+
     img {
       width: 120px;
       height: 120px;
@@ -31,6 +33,7 @@
       margin-bottom: 15px;
       border: 3px solid #ff4d6d;
     }
+
     input {
       padding: 10px;
       width: 80%;
@@ -39,6 +42,7 @@
       margin-bottom: 10px;
       text-align: center;
     }
+
     button {
       padding: 10px 20px;
       margin: 10px;
@@ -47,6 +51,7 @@
       border-radius: 8px;
       cursor: pointer;
     }
+
     .yes { background: #4CAF50; color: white; }
     .no { background: #f44336; color: white; position: absolute; }
 
@@ -75,7 +80,7 @@
     <source src="bensound-romantic.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- YES Special Music -->
+  <!-- YES Music -->
   <audio id="yesMusic">
     <source src="bensound-romantic.mp3" type="audio/mpeg">
   </audio>
@@ -88,10 +93,10 @@
       <h3>Hey ❤️ write your name to continue</h3>
       <input type="text" id="herName" placeholder="Your name here 😍">
       <br>
-      <button class="yes" onclick="startProposal()">Start</button>
+      <button class="yes" onclick="startMusic(); startProposal()">Start</button>
     </div>
 
-    <!-- Questions -->
+    <!-- Quiz -->
     <div id="quiz" style="display:none;">
       <h2 id="question"></h2>
       <button class="yes" onclick="startMusic(); nextQuestion(true)">Yes</button>
@@ -115,38 +120,53 @@
     ];
 
     function startProposal() {
-  name = document.getElementById("herName").value.trim();
+      step = 0; // 🔥 reset for new user
 
-  if (name === "") {
-    alert("Please enter your name first 😄");
-    return;
-  }
+      name = document.getElementById("herName").value.trim();
 
-  document.getElementById("nameBox").style.display = "none";
-  document.getElementById("quiz").style.display = "block";
+      if (name === "") {
+        alert("Please enter your name first 😄");
+        return;
+      }
 
-  document.getElementById("question").innerText =
-  `Hey ${name} 💖\n\n${questions[0]}`;
+      document.getElementById("nameBox").style.display = "none";
+      document.getElementById("quiz").style.display = "block";
+
+      document.getElementById("question").innerText =
+        `Hey ${name} 💖\n\n${questions[0]}`;
+    }
 
     function startMusic() {
       if (!musicStarted) {
-        document.getElementById("bgMusic").play();
+        const music = document.getElementById("bgMusic");
+        music.play().catch(() => {});
         musicStarted = true;
       }
     }
 
     function nextQuestion(answer) {
       step++;
+
       if (step < questions.length) {
         document.getElementById("question").innerText = questions[step];
       } else {
         if (answer) {
           document.getElementById("bgMusic").pause();
           document.getElementById("yesMusic").play();
-          document.getElementById("question").innerText = `Ashish ❤️ ${name}\nYou just made me the happiest person 😍`;
+
+          document.getElementById("question").innerText =
+            `Ashish ❤️ ${name}\n\nYou just made me the happiest person 😍`;
+
           launchHearts();
+
+          // 🔥 AUTO RESET FOR NEXT USER
+          setTimeout(() => {
+            resetApp();
+          }, 6000);
+
         } else {
-          document.getElementById("question").innerText = "No option is not allowed 😜 Try again!";
+          document.getElementById("question").innerText =
+            "No option is not allowed 😜 Try again!";
           step = questions.length - 2;
         }
       }
@@ -167,10 +187,26 @@
         heart.style.top = "100%";
         document.body.appendChild(heart);
 
-        setTimeout(() => {
-          heart.remove();
-        }, 3000);
+        setTimeout(() => heart.remove(), 3000);
       }
+    }
+
+    function resetApp() {
+      step = 0;
+      name = "";
+      musicStarted = false;
+
+      document.getElementById("herName").value = "";
+      document.getElementById("quiz").style.display = "none";
+      document.getElementById("nameBox").style.display = "block";
+
+      const bg = document.getElementById("bgMusic");
+      bg.pause();
+      bg.currentTime = 0;
+
+      const yes = document.getElementById("yesMusic");
+      yes.pause();
+      yes.currentTime = 0;
     }
   </script>
 
